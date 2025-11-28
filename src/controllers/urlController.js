@@ -1,5 +1,5 @@
 const urlService = require('../services/urlService');
-
+const { BASE_URL } = require('../config/env');
 
 exports.shorten = async (req, res, next) => {
   try {
@@ -19,7 +19,7 @@ exports.shorten = async (req, res, next) => {
     res.status(201).json({
       id: row.id,
       short_code: row.short_code,
-      short_url: `http://localhost:3000/${row.short_code}`,
+      short_url: `${BASE_URL}/${row.short_code}`, // ← ОНОВЛЕНО
       long_url: row.long_url,
       user_id: row.user_id,
       click_count: row.click_count,
@@ -32,7 +32,6 @@ exports.shorten = async (req, res, next) => {
     next(err);
   }
 };
-
 
 exports.redirect = async (req, res, next) => {
   try {
@@ -49,7 +48,6 @@ exports.redirect = async (req, res, next) => {
   }
 };
 
-
 exports.getStats = async (req, res, next) => {
   try {
     const { shortCode } = req.params;
@@ -63,7 +61,6 @@ exports.getStats = async (req, res, next) => {
   }
 };
 
-
 exports.getUserUrls = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -73,7 +70,6 @@ exports.getUserUrls = async (req, res, next) => {
     next(err);
   }
 };
-
 
 exports.updateUrl = async (req, res, next) => {
   try {
@@ -98,7 +94,6 @@ exports.updateUrl = async (req, res, next) => {
   }
 };
 
-
 exports.deleteUrl = async (req, res, next) => {
   try {
     const { shortCode } = req.params;
@@ -111,7 +106,6 @@ exports.deleteUrl = async (req, res, next) => {
     next(err);
   }
 };
-
 
 exports.bulkShorten = async (req, res, next) => {
   try {
